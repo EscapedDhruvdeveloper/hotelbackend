@@ -33,6 +33,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependencies>
+    <!-- Spring Web for @RestController and WebMvcConfigurer (needed for CORS config) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- (Optional) For JSON parsing -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <!-- Your other dependencies -->
+</dependencies>
+
 
 		<dependency>
 			<groupId>com.mysql</groupId>
