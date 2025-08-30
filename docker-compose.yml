@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Spring Boot Application
+  hotel-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hotel-backend
+    restart: unless-stopped
+    ports:
+      - "4040:4040"
+    environment:
+      # Database configuration
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      
+      # Cloudinary configuration (replace with your actual values)
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-duhxjbmba}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-525723623756331}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-rilZMGb_y89OnlRk1eiF2zeQ2t0}
+      CLOUDINARY_UPLOAD_PRESET: ${CLOUDINARY_UPLOAD_PRESET:-hotel_image_upload}
+      
+      # JVM options
+      JAVA_OPTS: -Xmx512m -Xms256m
+    networks:
+      - hotel-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4040/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  hotel-network:
+    driver: bridge
